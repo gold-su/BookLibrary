@@ -1,0 +1,86 @@
+section {
+	margin: 30px 0;
+	}
+
+#section_wrap {
+	width: 1200px;
+	margin: 0 auto;
+	}
+
+#section_wrap .word {
+	width: 1024px;
+	margin: 0 auto;
+	text-align: center;
+	}
+	
+#section_wrap .book_detail {
+	width: 1024px;
+	margin: 0 auto;
+	}
+
+#section_wrap .book_detail ul {
+	width: 100%;
+	overflow: hidden;
+	}
+
+#section_wrap .book_detail ul li {
+	float: left;
+	border: 1px solid #e1e1e1;
+	text-align: center;
+	}
+
+#section_wrap .book_detail ul li:nth-child(1) {
+	width: 274px; height: 379px;
+	overflow: hidden;
+	}
+
+#section_wrap .book_detail ul li:nth-child(1) img {
+	max-width: 100%;
+}
+
+#section_wrap .book_detail ul li:nth-child(2) {
+	width: 746px;
+	}
+
+#section_wrap .book_detail ul li:nth-child(2) table {
+	width: 100%;
+	border-collapse: collapse;
+	}
+
+#section_wrap .book_detail ul li:nth-child(2) table tr td {
+	border: 1px solid #e1e1e1;
+	padding: 10px;
+	}
+
+#section_wrap .book_detail ul li:nth-child(2) table tr td:nth-child(1) {
+	width: 100px;
+	text-align: right;
+	}
+	
+#section_wrap .book_detail ul li:nth-child(2) table tr td:nth-child(2) {
+	text-align: left;
+	font-weight: bolder;
+	}
+	
+#section_wrap .buttons {
+	width: 1024px;
+	margin: 0 auto;
+	text-align: right;	
+}
+
+#section_wrap .buttons a {
+	width: 130px;
+	display: inline-block;
+	margin: 15px 0;
+	padding: 8px 0;
+	text-align: center;
+	border: 1px solid #adadad;
+	border-radius: 5px;
+	color: #2e2e2e;
+	background-color: #f0f0f0;
+	font-weight: bolder;
+}
+
+#section_wrap .buttons a:hover {
+	background-color: #dedede;
+	}

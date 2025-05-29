@@ -1,0 +1,32 @@
+section {
+	margin: 30px 0;
+	}
+
+#section_wrap {
+	width: 1200px;
+	margin: 0 auto;
+	}
+	
+#section_wrap .banners .large_banner {
+	width: 1024px;
+	margin: 0 auto;
+	}
+
+#section_wrap .banners .small_banners {
+	width: 1024px;
+	margin: 0 auto;
+	}
+
+#section_wrap .banners .small_banners ul {
+	overflow: hidden;
+	}
+
+#section_wrap .banners .small_banners ul li {
+	width: 250px; 
+	margin-right: 8px;
+	float: left;
+	}
+
+#section_wrap .banners .small_banners ul li:last-child {
+	margin-right: 0;
+	}

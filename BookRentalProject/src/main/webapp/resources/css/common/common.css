@@ -1,0 +1,37 @@
+* {
+	margin:0;
+	padding: 0;
+	color: #2e2e2e;
+}
+
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: #2e2e2e;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='number'] {
+	border: 1px solid #adadad;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+input[type='button'],
+input[type='reset'] {
+	padding: 10px;
+	border: 1px solid #adadad;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+select {
+	border: 1px solid #adadad;
+	border-radius: 5px;
+	padding: 10px;
+}

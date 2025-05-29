@@ -1,0 +1,41 @@
+nav {
+	margin: 15px 0;
+	}
+
+#nav_wrap {
+	width: 1200px;
+	margin: 0 auto;
+	}
+
+#nav_wrap .menu {
+	border-bottom: 1px solid #d9d9d9;
+	}
+
+#nav_wrap .menu ul {
+	overflow: hidden;
+	}
+
+#nav_wrap .menu ul li {
+	float: right;
+	margin-right: 5px;
+	margin-left: 30px;
+	}
+
+#nav_wrap .menu ul li a:hover {
+	text-decoration: #949494 underline;
+	}
+	
+#nav_wrap .search {
+	height: 70px;
+	line-height: 70px;
+	text-align: center;
+	border-bottom: 1px solid #d9d9d9;
+	}
+
+#nav_wrap .search input[type='text'] {
+	width: 300px;
+	}
+
+#nav_wrap .search input[type='button'] {
+	width: 80px;
+	}

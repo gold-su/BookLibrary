@@ -1,0 +1,49 @@
+section {
+	margin: 30px 0;
+	}
+
+#section_wrap {
+	width: 1200px;
+	margin: 0 auto;
+	}
+
+#section_wrap .word {
+	width: 1024px;
+	margin: 0 auto;
+	text-align: center;
+	}
+	
+#section_wrap .create_account_form {
+	width: 1024px;
+	margin: 0 auto;
+	text-align: center;
+	}
+
+#section_wrap .create_account_form input {
+	width: 300px;
+	margin: 3px;
+	}
+
+#section_wrap .create_account_form select {
+	width: 322px;
+	margin: 3px;
+	}
+
+#section_wrap .create_account_form input[type='button'],
+#section_wrap .create_account_form input[type='reset'] {
+	width: 156px;
+	}
+
+#section_wrap .login {
+	width: 1024px;
+	margin: 50px auto;
+	text-align: center;
+	}
+
+#section_wrap .login a {
+	display: inline-block;
+	width: 200px;
+	padding: 10px 0;
+	border-top: 1px solid #e1e1e1;
+	border-bottom: 1px solid #e1e1e1;
+	}

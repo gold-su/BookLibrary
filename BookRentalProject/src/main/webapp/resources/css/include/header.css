@@ -1,0 +1,32 @@
+header {
+	width: 100%;
+	background-color: #f0f0f0;
+	border-bottom: 1px solid #d9d9d9;
+	}
+
+#header_wrap {
+	width: 1200px;
+	margin: 0 auto;
+	}
+
+#header_wrap .menu {
+	height: 30px;
+	line-height: 30px;
+	border-bottom: 1px solid #d9d9d9;
+	}
+
+#header_wrap .menu ul {
+	overflow: hidden;
+	}
+
+#header_wrap .menu ul li {
+	float: right;
+	margin-right: 5px;
+	margin-left: 25px;
+	}
+
+#header_wrap .title {
+	height: 80px;
+	line-height: 80px;
+	text-align: center;
+	}

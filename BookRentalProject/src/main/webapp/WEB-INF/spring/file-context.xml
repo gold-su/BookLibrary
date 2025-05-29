@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 클라이언트와 서버 간에 전송되는 HTTP 요청 또는 응답에서 여러 종류의 데이터를 동시에 전송하기 위한 멀티파트 요청 처리 -->
+	<bean id = "multipartResolver" class = "org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10240000"/>
+		<property name="defaultEncoding" value="utf-8"/>
+	</bean>
+</beans>

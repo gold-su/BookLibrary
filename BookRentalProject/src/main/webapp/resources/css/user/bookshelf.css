@@ -1,0 +1,79 @@
+section {
+	margin: 30px 0;
+	}
+
+#section_wrap {
+	width: 1200px;
+	margin: 0 auto;
+	}
+	
+#section_wrap .word {
+	width: 1024px;
+	margin: 0 auto;
+	text-align: center;
+	}
+
+#section_wrap .category_name {
+	width: 700px;
+	margin: 30px auto 10px;
+	padding: 0 0 4px 0;
+	border-bottom: 1px solid #e1e1e1;
+	text-align: center;
+	}
+
+#section_wrap .rental_book_list table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: .9em;
+	}
+
+#section_wrap .rental_book_list table thead tr th {
+	border: 1px solid #e1e1e1;
+	padding: 10px 3px;
+	text-align: center;
+	color: #fff;
+	background-color: #a5a5a5;
+	}
+
+#section_wrap .rental_book_list table thead tr th:nth-child(1) {
+	width: 450px;
+	}
+
+#section_wrap .rental_book_list table thead tr th:nth-child(2) {
+	width: 150px;
+	}
+
+#section_wrap .rental_book_list table thead tr th:nth-child(3) {
+	width: 200px;
+	}
+
+#section_wrap .rental_book_list table tbody tr:nth-child(2n-1) {
+	background-color: #f3f3f3;
+}
+
+#section_wrap .rental_book_list table tbody tr td {
+	border: 1px solid #e1e1e1;
+	padding: 10px 3px;
+	text-align: center;
+	}
+
+#section_wrap .other_category {
+	width: 700px;
+	margin: 50px auto;
+	padding: 4px 0 4px 0;
+	text-align: center;
+	}
+
+#section_wrap .other_category a {
+	width: 140px;
+	display: inline-block;
+	border: 1px solid #adadad;
+	border-radius: 5px;
+	background-color: #f0f0f0;
+	padding: 10px 20px;
+	font-size: .9em;
+	}
+
+#section_wrap .other_category a:hover {
+	background-color: #dddddd;
+	}
