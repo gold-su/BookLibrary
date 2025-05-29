@@ -14,6 +14,7 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/libraryUploadImg/**" location="file:///C:/library/upload/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -21,8 +22,40 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.office.library" />
+	<context:component-scan base-package="com.office.library" name-generator="com.office.library.config.LibraryBeanNameGenerator"/>
 	
-	
+	<!-- <interceptors>
+		<interceptor>
+			<mapping path="/admin/member/**"/>
+			<exclude-mapping path="/admin/member/bookDetail"/>
+			<exclude-mapping path="/admin/member/bookDetail"/>
+			<exclude-mapping path="/admin/member/createAccountForm"/>
+			<exclude-mapping path="/admin/member/createAccountConfirm"/>
+			<exclude-mapping path="/admin/member/loginForm"/>
+			<exclude-mapping path="/admin/member/loginConfirm"/>
+			<exclude-mapping path="/admin/member/findPasswordForm"/>
+			<exclude-mapping path="/admin/member/findPasswordConfirm"/>
+			<beans:bean class="com.office.library.admin.member.AdminMemberLoginInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/book/admin/**"/>
+			<exclude-mapping path="/book/admin/searchBookConfirm"/>
+			<exclude-mapping path="/book/admin/bookDetail"/>
+			<beans:bean class="com.office.library.admin.member.AdminMemberLoginInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/book/user/rentalBookConfirm"/>
+			<mapping path="/book/user/enterBookshelf"/>
+			<mapping path="/book/user/listupRentalBookHistory"/>
+			<mapping path="/user/member/**"/>
+			<exclude-mapping path="/user/member/createAccountForm"/>
+			<exclude-mapping path="/user/member/createAccountConfirm"/>
+			<exclude-mapping path="/user/member/loginForm"/>
+			<exclude-mapping path="/user/member/loginConfirm"/>
+			<exclude-mapping path="/user/member/findPasswordForm"/>
+			<exclude-mapping path="/user/member/findPasswordConfirm"/>
+			<beans:bean class="com.office.library.user.member.UserMemberLoginInterceptor"/>
+		</interceptor>
+	</interceptors> -->
 	
 </beans:beans>
