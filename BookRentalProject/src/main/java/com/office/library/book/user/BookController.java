@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.office.library.book.BookVo;
 
@@ -32,5 +33,19 @@ public class BookController {
 			
 			return nextPage;
 					
+		}
+		//도서 상세 보기 --> get 방식으로 전달된 도서번호를 인수로 받음, 결과는 VO객체에 담아 속성으로 추가
+		//@ReqeuestMapping(value = "/bookDetail", method = RequestMethod.GET)
+		@GetMapping("/bookDetail")
+		public String bookDetail(@RequestParam("b_no") int b_no, Model model) {
+			System.out.println("[BookController] bookDetail()");
+			//실행 후 이동할 view 페이지
+			String nextPage = "admin/book/book_detail";
+			//도서번호를 기준으로 도서 검색
+			BookVo bookVo = bookService.bookDetail(b_no);
+			//조회 결과를 view 페이지에 전달하기 위해 Model 클래스의 속성으로 지정 
+			model.addAttribute("bookVo", bookVo);
+			
+			return nextPage;
 		}
 }

@@ -58,4 +58,46 @@ public class BookDao {
 			//검색한 내용이 존재하던 그 결과를, 아니면 null 변환
 			return bookVos.size() > 0 ? bookVos : null;
 		}
+		
+		//글번호를 검색조건으로 SELECT 쿼리문을 실행하여 하나의 레코드를 받아옴
+		public BookVo selectBook(int b_no) {
+			System.out.println("[BookDao] selectBook()");
+			//쿼리문
+			String sql = "select * from tbl_book where b_no = ?";
+			
+			List<BookVo> bookVos = null;
+			
+			try {
+				//쿼리문을 실행하야 결과를 List<T>에 받음
+				bookVos = jdbcTemplate.query(
+						sql,//1. 쿼리문
+						new RowMapper<BookVo>() {
+							//2.RowMapper 인터페이스
+							 @Override
+							 public BookVo mapRow(ResultSet rs, int rowNum)throws SQLException{
+								 BookVo bookVo = new BookVo();
+								 
+								 bookVo.setB_no(rs.getInt("b_no"));
+								 bookVo.setB_thumbnail(rs.getString("b_thumbnail"));
+								 bookVo.setB_name(rs.getString("b_name"));
+								 bookVo.setB_author(rs.getString("b_author"));
+								 bookVo.setB_publisher(rs.getString("b_publisher"));
+								 bookVo.setB_publish_year(rs.getString("b_publish_year"));
+								 bookVo.setB_isbn(rs.getString("b_isbn"));
+								 bookVo.setB_call_number(rs.getString("b_call_number"));
+								 bookVo.setB_rantal_able(rs.getInt("b_rantal_able"));
+								 bookVo.setB_reg_date(rs.getString("b_reg_date"));
+								 bookVo.setB_mod_date(rs.getString("b_mod_date"));
+								 		
+								 return bookVo;
+							 }
+						},
+						b_no);//3. 검색조건
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			//도서번호는 기본키이고, 제목을 클릭하여 인수로 전달받기에, 조회 결과는 오로지 하나
+			return bookVos.size() > 0 ? bookVos.get(0) : null;
+		}
 }
