@@ -179,5 +179,21 @@ public class BookController {
 		return nextPage;
 	}
 	
+	//도서 검색
+//	@GetMapping("/searchBookConfirm")
+//	public String searchBookConfirm(BookVo bookVo, Model model) {
+//		System.out.println("[UserBookController] searchBookConfirm()");
+//		
+//		String nextPage = "user/book/search_book";
+//		
+//		//BookSerivce 클래스에 도서 검색 요청
+//		List<BookVo> bookVos = bookService.searchBookConfirm(bookVo);
+//		
+//		//Model 클래스를 이용하여 검색 데이터를 view에 전달
+//		model.addAttribute("bookVos", bookVos);
+//		
+//		return nextPage;
+//				
+//	}
 			
 }
