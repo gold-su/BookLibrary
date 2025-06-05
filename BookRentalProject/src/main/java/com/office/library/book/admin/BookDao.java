@@ -62,7 +62,8 @@ public class BookDao {
 	
 	//도서 검색
 	public List<BookVo> selectBooksBySearch(BookVo bookVo){
-		System.out.println("[BookDao selectBooks()");
+		System.out.println("[BookDao] selectBooksBySearch()");
+
 		//검색 쿼리문
 		String sql = "SELECT * FROM tbl_book WHERE b_name LIKE ? ORDER BY b_no DESC";
 		//리턴할 List<BookVo> 객체

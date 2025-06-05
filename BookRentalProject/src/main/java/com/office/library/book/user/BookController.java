@@ -2,6 +2,8 @@ package com.office.library.book.user;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.office.library.book.BookVo;
+import com.office.library.user.member.UserMemberVo;
 
 //Bean 공급 및 /book/user 요청 처리를 위한 애너테이션 설정
 @Controller
@@ -40,11 +43,32 @@ public class BookController {
 		public String bookDetail(@RequestParam("b_no") int b_no, Model model) {
 			System.out.println("[BookController] bookDetail()");
 			//실행 후 이동할 view 페이지
-			String nextPage = "admin/book/book_detail";
+			String nextPage = "user/book/book_detail";
 			//도서번호를 기준으로 도서 검색
 			BookVo bookVo = bookService.bookDetail(b_no);
 			//조회 결과를 view 페이지에 전달하기 위해 Model 클래스의 속성으로 지정 
 			model.addAttribute("bookVo", bookVo);
+			
+			return nextPage;
+		}
+		//도서 대출 
+		@GetMapping("/rentalBookConfirm")
+		public String rentalBookConfirm(@RequestParam("b_no") int b_no, HttpSession session) {
+			System.out.println("[UserBookController] rentalBookConfirm()");
+			
+			String nextPage = "user/book/rental_book_ok";
+			
+			//로그인 확인 --> 비정상 접속 및 장시간 유휴상태 체크 --> 비정상 시 로그인 페이지로 이동
+			UserMemberVo loginedUserMemberVo = 
+					(UserMemberVo) session.getAttribute("loginedUserMemberVo");
+			if(loginedUserMemberVo == null)
+				return "redirect:/user/member/loginForm";
+			
+			//BookService 클래스에 대출확인 요청, 리턴 결과는 변경된 레코드 수
+			int result = bookService.rentalBookConfirm(b_no, loginedUserMemberVo.getU_m_no());
+			
+			if(result <= 0)
+				nextPage = "user/book/rental_book_ng";
 			
 			return nextPage;
 		}

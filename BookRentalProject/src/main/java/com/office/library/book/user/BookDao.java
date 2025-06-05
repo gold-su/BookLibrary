@@ -40,10 +40,10 @@ public class BookDao {
 						bookVo.setB_name(rs.getString("b_name"));
 						bookVo.setB_author(rs.getString("b_author"));
 						bookVo.setB_publisher(rs.getString("b_publisher"));
-						bookVo.setB_publisher(rs.getString("b_publish_year"));
+						bookVo.setB_publish_year(rs.getString("b_publish_year"));
 						bookVo.setB_isbn(rs.getString("b_isbn"));
 						bookVo.setB_call_number(rs.getString("b_call_number"));
-						bookVo.setB_rantal_able(rs.getInt("b_rantal_able"));
+						bookVo.setB_rantal_able(rs.getInt("b_rantal_able")); 
 						bookVo.setB_reg_date(rs.getString("b_reg_date"));
 						bookVo.setB_mod_date(rs.getString("b_mod_date"));
 						
@@ -100,4 +100,36 @@ public class BookDao {
 			//도서번호는 기본키이고, 제목을 클릭하여 인수로 전달받기에, 조회 결과는 오로지 하나
 			return bookVos.size() > 0 ? bookVos.get(0) : null;
 		}
+		// 도서 대출 테이블에 레코드 추가
+		public int insertRentalBook(int b_no, int u_m_no) {
+		    System.out.println("[BookDao] insertRentalBook()");
+
+		    String sql = "INSERT INTO tbl_rental_book (b_no, u_m_no, rb_start_date, rb_reg_date, rb_mod_date) " +
+		                 "VALUES (?, ?, NOW(), NOW(), NOW())";
+		    
+		    int result = -1;
+		    try {
+		        result = jdbcTemplate.update(sql, b_no, u_m_no);
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+
+		    // 리턴 값은 변경된 레코드 수 -> 현재는 1
+		    return result;
+		}
+		
+		// 대출된 도서의 "대출가능(1)" -> "대출중(0)"으로 변경
+		public void updateRentalBookAble(int b_no) {
+		    System.out.println("[BookDao] updateRentalBookAble()");
+
+		    String sql = "UPDATE tbl_book SET b_rantal_able = 0 WHERE b_no = ?";
+		    
+		    try {
+		        jdbcTemplate.update(sql, b_no);
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		}
+
+
 }

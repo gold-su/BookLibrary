@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.office.library.book.BookVo;
-import com.office.library.book.admin.BookDao;
+import com.office.library.book.user.BookDao;
 
 //Bean 공급을 위한 애너테이션 설정
 @Component
@@ -38,17 +38,20 @@ public class BookService {
 			return bookDao.selectBook(b_no);
 		}
 		
-		//도서정보 수정
-		public int modifyBookConfirm(BookVo bookVo) {
-			System.out.println("[BookService] modifyBookConfirm()");
-			
-			return bookDao.updateBook(bookVo);
+		//대출 요청 처리
+		public int rentalBookConfirm(int b_no, int u_m_no) {
+		    System.out.println("[BookService] rentalBookConfirm()");
+
+		    //"도서 대출" 테이블의 레코드 하나 추가
+		    int result = bookDao.insertRentalBook(b_no, u_m_no);
+
+		    //대출 처리된 도서의 "대출 가능" --> "대출 중"으로 변경
+		    if(result >= 0) {
+		        bookDao.updateRentalBookAble(b_no);
+		    }
+
+		    //"도서 대출" 테이블에 변경된 레코드 수 반환
+		    return result;
 		}
-		
-		//도서 삭제
-		public int deleteBookConfirm(int b_no) {
-			System.out.println("[BookService] deleteBookConfirm()");
-			
-			return bookDao.deleteBook(b_no);
-		}
+
 }
