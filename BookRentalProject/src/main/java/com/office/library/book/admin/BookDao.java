@@ -8,7 +8,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+<<<<<<< HEAD
 import org.springframework.jdbc.core.RowMapper;
+=======
+import org.springframework.jdbc.core.RowMapper; 
+>>>>>>> branch 'main' of https://github.com/gold-su/BookLibrary.git
 import org.springframework.stereotype.Component;
 
 import com.office.library.book.BookVo;
