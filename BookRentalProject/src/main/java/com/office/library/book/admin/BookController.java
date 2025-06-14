@@ -15,170 +15,305 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.office.library.admin.member.AdminMemberVo;
 import com.office.library.book.BookVo;
+import com.office.library.book.HopeBookVo;
+//import com.office.library.book.HopeBookVo;
+import com.office.library.book.RentalBookVo;
 import com.office.library.book.admin.util.UploadFileService;
 
-//컨트롤러 클래스 지정 --> IoC 컨테이너에 객체 생성
-//@RequestMapping() 지정 --> "/book/admin"의 url로 전급할 때 동작
 @Controller
+//@Controller("admin.BookController")
 @RequestMapping("/book/admin")
 public class BookController {
-	//BookService 클래스 자동 주입
+
 	@Autowired
 	BookService bookService;
 	
-	//UploadFileService 클래스 자동 주입
 	@Autowired
 	UploadFileService uploadFileService;
 	
-	//도서 등록
-	//@RequestMapping(value = "/registerBookForm", method = RequestMethod.GET)
+	/*
+	 * 도서 등록
+	 */
+//	@RequestMapping(value = "/registerBookForm", method = RequestMethod.GET)
 	@GetMapping("/registerBookForm")
 	public String registerBookForm() {
 		System.out.println("[BookController] registerBookForm()");
 		
 		String nextPage = "admin/book/register_book_form";
-		//"register_book_form.jsp" 페이지로 이동
+		
 		return nextPage;
 		
 	}
 	
-	//도서 등록 확인, 첨부파일(책 표지 이미지)은 VO 객체와 별도로 전달받음
-	//@RequestMapping(value = "/registerBookConfirm", method = RequestMethod.POST)
+	/*
+	 * 도서 등록 확인
+	 */
+//	@RequestMapping(value = "/registerBookConfirm", method = RequestMethod.POST)
 	@PostMapping("/registerBookConfirm")
-	public String registerBookConfirm(BookVo bookVo, @RequestParam("file")MultipartFile file) {
+	public String registerBookConfirm(BookVo bookVo, 
+									  @RequestParam("file") MultipartFile file) {
 		System.out.println("[BookController] registerBookConfirm()");
-		System.out.println(file.getOriginalFilename());
 		
 		String nextPage = "admin/book/register_book_ok";
 		
-		//첨부파일 저장 --> UploadFileService 클래스 이용
+		// SAVE FILE
 		String savedFileName = uploadFileService.upload(file);
-		System.out.println("test");
 		
-		if(savedFileName != null) { //첨부파일 업로드 성공한 경우 도서 정보 등록
-			bookVo.setB_thumbnail(savedFileName); //첨부파일
-			//도서정보 등록 --> BookService 클래스 이용 -- > 리턴값은 변경 레코드 수
+		if (savedFileName != null) {
+			bookVo.setB_thumbnail(savedFileName);
 			int result = bookService.registerBookConfirm(bookVo);
 			
-			if(result <= 0)nextPage = "admin/book/register_book_ng";
-				
-		}
-		else {
-			//첨부파일 업로드 실패
+			if (result <= 0)
+				nextPage = "admin/book/register_book_ng";
+			
+		} else {
 			nextPage = "admin/book/register_book_ng";
+			
 		}
 		
-		//도서등록 성공 --> register_book_ok.jsp, 실패 --> register_book_ng.jsp
 		return nextPage;
+		
 	}
 	
-	//도서 검색
-	//@RequeestMapping(value = "/searchBookConfirm", method = RequestMethod.GET)
+	/*
+	 * 도서 검색
+	 */
+//	@RequestMapping(value = "/searchBookConfirm", method = RequestMethod.GET)
 	@GetMapping("/searchBookConfirm")
 	public String searchBookConfirm(BookVo bookVo, Model model) {
 		System.out.println("[UserBookController] searchBookConfirm()");
-		//결과 검색 후 이동할 view 페이지 지정
+		
 		String nextPage = "admin/book/search_book";
-		//서비스 클래스를 호출하여 결과를 List<BookVo>로 받아옴
+		
 		List<BookVo> bookVos = bookService.searchBookConfirm(bookVo);
-		//view 페이지로 데이터를 전달하기 위해 속성으로 등록
+		
 		model.addAttribute("bookVos", bookVos);
 		
 		return nextPage;
+		
 	}
 	
-	//도서 상세 보기 --> get 방식으로 전달된 도서번호를 인수로 받음, 결과는 VO객체에 담아 속성으로 추가
-	//@ReqeuestMapping(value = "/bookDetail", method = RequestMethod.GET)
+	/*
+	 * 도서 상세
+	 */
+//	@RequestMapping(value = "/bookDetail", method = RequestMethod.GET)
 	@GetMapping("/bookDetail")
 	public String bookDetail(@RequestParam("b_no") int b_no, Model model) {
 		System.out.println("[BookController] bookDetail()");
-		//실행 후 이동할 view 페이지
+		
 		String nextPage = "admin/book/book_detail";
-		//도서번호를 기준으로 도서 검색
+		
 		BookVo bookVo = bookService.bookDetail(b_no);
-		//조회 결과를 view 페이지에 전달하기 위해 Model 클래스의 속성으로 지정 
+		
 		model.addAttribute("bookVo", bookVo);
 		
 		return nextPage;
+		
 	}
 	
-	//도서 수정/
-	//@ReqeustMapping(value = "/modifyBookForm", method = RequestMethod.GET)
+	/*
+	 * 도서 수정
+	 */
+//	@RequestMapping(value = "/modifyBookForm", method = RequestMethod.GET)
 	@GetMapping("/modifyBookForm")
-	//GET 방식으로 전달된 도서번호를 이용하여 DAO 클래스에 도서정보를 요청 --> 수정폼에 정보 표시하기 위함
-	//조회된 도서정보는 Model 객체의 속성으로 추가하여 view 페이지에 전달
-	//Session을 이용하여 로그인 상태 확인 --> 비장상접속 및 장시간 유휴상태 대비
-	public String modifyBookForm(@RequestParam("b_no")int b_no, //도서번호
-											Model model, 		//도서정보를 속성으로 전달
-											HttpSession session) { //세션 -> 로그인 확인
+	public String modifyBookForm(@RequestParam("b_no") int b_no, 
+								 Model model, 
+								 HttpSession session) {
 		System.out.println("[BookController] bookDetail()");
 		
 		String nextPage = "admin/book/modify_book_form";
-		//로그인한 사용자 정보를 세션에서 확인, 로그인 상태가 아니면 로그인 페이지로 이동
-		AdminMemberVo loginedAdminMemberVo
-			= (AdminMemberVo) session.getAttribute("loginedAdminMemberVo");
-		if(loginedAdminMemberVo==null)
+		
+		AdminMemberVo loginedAdminMemberVo = (AdminMemberVo) session.getAttribute("loginedAdminMemberVo");
+		if (loginedAdminMemberVo == null)
 			return "redirect:/admin/member//loginForm";
-		//로그인한 상태라면 도서정보 조회를 요청하고, 이를 Model 클래스의 속성으로 추가하여 modify_book_form.jsp에 전달
+		
 		BookVo bookVo = bookService.modifyBookForm(b_no);
+		
 		model.addAttribute("bookVo", bookVo);
+		
 		return nextPage;
 		
 	}
 	
-	//도서 수정 확인, 표지 이미지는 지정하지 않아도 됨
+	/*
+	 * 도서 수정 확인
+	 */
+//	@RequestMapping(value = "/modifyBookConfirm", method = RequestMethod.POST)
 	@PostMapping("/modifyBookConfirm")
-	public String modifyBookConfirm(BookVo bookVo, //자동 전달된 도서 수정 정보
-								@RequestParam("file") MultipartFile file, //표지 이미지
-								HttpSession session) { //로그인 확인을 session
-		System.out.println("[BookContoroller] modifyBookConfirm()");
+	public String modifyBookConfirm(BookVo bookVo, 
+									@RequestParam("file") MultipartFile file, 
+									HttpSession session) {
+		System.out.println("[BookController] modifyBookConfirm()");
+		
 		String nextPage = "admin/book/modify_book_ok";
 		
-		//세션을 이용하여 로그인 상태 확인 --> 비정상 접속 및 장기 유휴상태 대비
-		AdminMemberVo loginedAdminMemberVo
-			= (AdminMemberVo) session.getAttribute("loginedAdminMemberVo");
-		if(loginedAdminMemberVo == null)
+		AdminMemberVo loginedAdminMemberVo = (AdminMemberVo) session.getAttribute("loginedAdminMemberVo");
+		if (loginedAdminMemberVo == null)
 			return "redirect:/admin/member//loginForm";
 		
-		//첨부파일(표지 이미지 재설정)이 존재할 경우 업로드
-		if(!file.getOriginalFilename().equals("")) {
-			//SAVE FLIE
+		if (!file.getOriginalFilename().equals("")) {
+			// SAVE FILE
 			String savedFileName = uploadFileService.upload(file);
-			if(savedFileName != null)
+			if (savedFileName != null)
 				bookVo.setB_thumbnail(savedFileName);
+			
 		}
-		//서비스 객체에 수정 요청
+		
 		int result = bookService.modifyBookConfirm(bookVo);
-		//수정된 레코드가 없으면 수정 작업 실패
-		if(result <= 0)
+		
+		if (result <= 0)
 			nextPage = "admin/book/modify_book_ng";
 		
 		return nextPage;
+		
 	}
 	
-	//도서 삭제
-	@GetMapping("/deleteBookConfirm") 
-
-	public String deleteBookConfirm(@RequestParam("b_no") int b_no,
+	/*
+	 * 도서 삭제 확인
+	 */
+//	@RequestMapping(value = "/deleteBookConfirm", method = RequestMethod.GET)
+	@GetMapping("/deleteBookConfirm")
+	public String deleteBookConfirm(@RequestParam("b_no") int b_no, 
 									HttpSession session) {
 		System.out.println("[BookController] deleteBookConfirm()");
 		
 		String nextPage = "admin/book/delete_book_ok";
-		//세션을 이용 로그인 상태 확인 --> 비정상 접속 혹은 장시간 유휴 상태 대비
-		AdminMemberVo loginedAdminMemberVO
-			= (AdminMemberVo) session.getAttribute("loginedAdminMemberVo");
-		if(loginedAdminMemberVO == null)
-			return "redirect:/admin/member/loginForm";
 		
-		//도서 삭제 요청
+		AdminMemberVo loginedAdminMemberVo = (AdminMemberVo) session.getAttribute("loginedAdminMemberVo");
+		if (loginedAdminMemberVo == null)
+			return "redirect:/admin/member//loginForm";
+		
 		int result = bookService.deleteBookConfirm(b_no);
 		
-		if(result <= 0)
+		if (result <= 0)
 			nextPage = "admin/book/delete_book_ng";
 		
 		return nextPage;
+		
 	}
 	
+	/*
+	 * 대출 도서 목록
+	 */
 	
+//	@RequestMapping(value = "/getRentalBooks", method = RequestMethod.GET)
+	@GetMapping("/getRentalBooks")
+	public String getRentalBooks(Model model) {
+		System.out.println("[BookController] getRentalBooks()");
+		
+		String nextPage = "admin/book/rental_books";
+		
+		List<RentalBookVo> rentalBookVos = bookService.getRentalBooks();
+		
+		model.addAttribute("rentalBookVos", rentalBookVos);
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 도서 반납 확인
+	 */
+//	@RequestMapping(value = "/returnBookConfirm", method = RequestMethod.GET)
+	@GetMapping("/returnBookConfirm")
+	public String returnBookConfirm(@RequestParam("b_no") int b_no, 
+									@RequestParam("rb_no") int rb_no) {
+		System.out.println("[BookController] returnBookConfirm()");
+		
+		String nextPage = "admin/book/return_book_ok";
+		
+		int result = bookService.returnBookConfirm(b_no, rb_no);
+		
+		if (result <= 0)
+			nextPage = "admin/book/return_book_ng";
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 희망 도서 목록
+	 */
+//	@RequestMapping(value = "/getHopeBooks", method = RequestMethod.GET)
+	@GetMapping("/getHopeBooks")
+	public String getHopeBooks(Model model) {
+		System.out.println("[BookController] getHopeBooks()");
+		
+		String nextPage = "admin/book/hope_books";
+		
+		List<HopeBookVo> hopeBookVos = bookService.getHopeBooks();
+		
+		model.addAttribute("hopeBookVos", hopeBookVos);
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 희망 도서 등록(입고 처리)
+	 */
+//	@RequestMapping(value = "/registerHopeBookForm", method = RequestMethod.GET)
+	@GetMapping("/registerHopeBookForm")
+	public String registerHopeBookForm(Model model, HopeBookVo hopeBookVo) {
+		System.out.println("[BookController] registerHopeBookForm()");
+		
+		String nextPage = "admin/book/register_hope_book_form";
+		
+		model.addAttribute("hopeBookVo", hopeBookVo);
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 희망 도서 등록(입고 처리) 확인
+	 */
+//	@RequestMapping(value = "/registerHopeBookConfirm", method = RequestMethod.POST)
+	@PostMapping("/registerHopeBookConfirm")
+	public String registerHopeBookConfirm(BookVo bookVo, 
+										  @RequestParam("hb_no") int hb_no, 
+										  @RequestParam("file") MultipartFile file) {
+		System.out.println("[BookController] registerHopeBookConfirm()");
+		
+		System.out.println("hb_no: " + hb_no);
+		
+		String nextPage = "admin/book/register_book_ok";
+		
+		// SAVE FILE
+		String savedFileName = uploadFileService.upload(file);
+		
+		if (savedFileName != null) {
+			bookVo.setB_thumbnail(savedFileName);
+			int result = bookService.registerHopeBookConfirm(bookVo, hb_no);
 			
+			if (result <= 0)
+				nextPage = "admin/book/register_book_ng";
+		
+		} else {
+			nextPage = "admin/book/register_book_ng";
+		
+		}
+		
+		return nextPage;
+
+	}
+	
+	/*
+	 * 전체 도서 목록
+	 */
+//	@RequestMapping(value = "/getAllBooks", method = RequestMethod.GET)
+	@GetMapping("/getAllBooks")
+	public String getAllBooks(Model model) {
+		System.out.println("[BookController] getAllBooks()");
+		
+		String nextPage = "admin/book/full_list_of_books";
+		
+		List<BookVo> bookVos = bookService.getAllBooks();
+		
+		model.addAttribute("bookVos", bookVos);
+		
+		return nextPage;
+		
+	}
+	
 }

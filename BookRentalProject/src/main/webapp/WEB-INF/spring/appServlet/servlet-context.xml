@@ -25,27 +25,12 @@
 	<context:component-scan base-package="com.office.library" name-generator="com.office.library.config.LibraryBeanNameGenerator"/>
 	
 	<interceptors>
-		<interceptor>
-			<mapping path="/admin/member/**"/>
-			<exclude-mapping path="/admin/member/bookDetail"/>
-			<exclude-mapping path="/admin/member/bookDetail"/>
-			<exclude-mapping path="/admin/member/createAccountForm"/>
-			<exclude-mapping path="/admin/member/createAccountConfirm"/>
-			<exclude-mapping path="/admin/member/loginForm"/>
-			<exclude-mapping path="/admin/member/loginConfirm"/>
-			<exclude-mapping path="/admin/member/findPasswordForm"/>
-			<exclude-mapping path="/admin/member/findPasswordConfirm"/>
-			<beans:bean class="com.office.library.admin.member.AdminMemberLoginInterceptor"/>
-		</interceptor>
-		<interceptor>
-			<mapping path="/book/admin/**"/>
-			<exclude-mapping path="/book/admin/searchBookConfirm"/>
-			<exclude-mapping path="/book/admin/bookDetail"/>
-			<beans:bean class="com.office.library.admin.member.AdminMemberLoginInterceptor"/>
-		</interceptor>
+		
 		<interceptor>
 			<mapping path="/book/user/rentalBookConfirm"/>
 			<mapping path="/book/user/enterBookshelf"/>
+			<mapping path="/user/member/modifyAccountForm"/>
+			<mapping path="/user/member/modifyAccountConfirm" />
 			<mapping path="/book/user/listupRentalBookHistory"/>
 			<mapping path="/book/user/requestHopeBookForm"/>
 			<mapping path="/book/user/listupRequestHopeBook"/>
