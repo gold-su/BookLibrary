@@ -24,7 +24,7 @@
 	
 	<context:component-scan base-package="com.office.library" name-generator="com.office.library.config.LibraryBeanNameGenerator"/>
 	
-	<!-- <interceptors>
+	<interceptors>
 		<interceptor>
 			<mapping path="/admin/member/**"/>
 			<exclude-mapping path="/admin/member/bookDetail"/>
@@ -47,6 +47,8 @@
 			<mapping path="/book/user/rentalBookConfirm"/>
 			<mapping path="/book/user/enterBookshelf"/>
 			<mapping path="/book/user/listupRentalBookHistory"/>
+			<mapping path="/book/user/requestHopeBookForm"/>
+			<mapping path="/book/user/listupRequestHopeBook"/>
 			<mapping path="/user/member/**"/>
 			<exclude-mapping path="/user/member/createAccountForm"/>
 			<exclude-mapping path="/user/member/createAccountConfirm"/>
@@ -56,6 +58,6 @@
 			<exclude-mapping path="/user/member/findPasswordConfirm"/>
 			<beans:bean class="com.office.library.user.member.UserMemberLoginInterceptor"/>
 		</interceptor>
-	</interceptors> -->
+	</interceptors>
 	
 </beans:beans>

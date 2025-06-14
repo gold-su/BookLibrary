@@ -88,10 +88,10 @@ public class UserMemberController {
 		String nextPage = "user/member/modify_account_form";
 		
 		//세션에 저장된 정보를 이용하여 로그인 상태 확인 --> 비정상 접속 및 장시간 유휴상황 대비
-		UserMemberVo loginedUserMemberVo
-				= (UserMemberVo) session.getAttribute("loginedUserMemberVo");
-		if(loginedUserMemberVo == null)
-			nextPage = "redirect:/user/member/loginForm";
+//		UserMemberVo loginedUserMemberVo
+//				= (UserMemberVo) session.getAttribute("loginedUserMemberVo");
+//		if(loginedUserMemberVo == null)
+//			nextPage = "redirect:/user/member/loginForm";
 		
 		return nextPage;
 	}

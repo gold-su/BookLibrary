@@ -61,9 +61,9 @@ public class BookController {
 			//로그인 확인 --> 비정상 접속 및 장시간 유휴상태 체크 --> 비정상 시 로그인 페이지로 이동
 			UserMemberVo loginedUserMemberVo = 
 					(UserMemberVo) session.getAttribute("loginedUserMemberVo");
-			if(loginedUserMemberVo == null)
-				return "redirect:/user/member/loginForm";
-			
+//			if(loginedUserMemberVo == null)
+//				return "redirect:/user/member/loginForm";
+//			
 			//BookService 클래스에 대출확인 요청, 리턴 결과는 변경된 레코드 수
 			int result = bookService.rentalBookConfirm(b_no, loginedUserMemberVo.getU_m_no());
 			
